@@ -5,6 +5,8 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "sensor_msgs/msg/joy.hpp"
 
+#include "controller.hpp"
+
 class JoyTranslate : public rclcpp::Node
 {
 public:
