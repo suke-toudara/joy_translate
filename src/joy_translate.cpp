@@ -10,16 +10,11 @@ JoyTranslate::JoyTranslate()
 
 void JoyTranslate::listener_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
 {
-    geometry_msgs::msg::Twist vel;
-    
-    // Scale the joystick values to adjust speed
-    vel.linear.x = 2.0 * msg->axes[1];  // Forward/backward tilt on joystick
-    vel.angular.z = 2.0 * msg->axes[3]; // Left/right tilt on joystick
-    
-    publisher_->publish(vel);
-    
-    // Log the linear velocity for debugging
-    RCLCPP_INFO(this->get_logger(), "Velocity: Linear=%.2f, Angular=%.2f", msg->axes[1], msg->axes[3]);
+    get_data(msg);
+    send_data.linear.x = -1*joy_left_x*127;
+    send_data.linear.y = joy_left_y*127;
+    send_data.angular.z = -1*joy_right_x*127;
+    publisher_->publish(send_data);
 }
 
 int main(int argc, char *argv[])
