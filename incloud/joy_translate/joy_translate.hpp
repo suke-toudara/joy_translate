@@ -7,11 +7,11 @@
 
 class JoyTranslate : public rclcpp::Node
 {
-pub\lic:
+public:
     JoyTranslate(); 
 
 private:
-    void listener_callback(const sensor_msgs::msg::Joy::SharedPtr msg);
+    void joy_output_cb(const sensor_msgs::msg::Joy::SharedPtr msg);
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr joy_twist_pub_;
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub_;
 };
