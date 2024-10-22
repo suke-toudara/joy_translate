@@ -15,9 +15,13 @@ void JoyTranslate::joy_output_cb(const sensor_msgs::msg::Joy &msg)
     controller.update_key_value(msg);
 
     auto twist_msg = geometry_msgs::msg::Twist();
-    twist_msg.linear.x = controller.joy_left_y;  
-    twist_msg.linear.y = controller.joy_left_x;  
-    twist_msg.angular.z = controller.joy_right_x; 
+    twist_msg.linear.x = controller.joy_left_y > 0 ? 
+                     controller.joy_left_y * max_linear_velocity_ : 
+                     std::abs(controller.joy_left_y) * min_linear_velocity_;
+
+    twist_msg.angular.z = controller.joy_right_x > 0 ? 
+                     controller.joy_right_x * max_angular_velocity_ : 
+                     std::abs(controller.joy_right_x) * min_angular_velocity_;
     joy_twist_pub_->publish(twist_msg);
 
     auto mode_msg = std_msgs::msg::Int32();
@@ -32,6 +36,7 @@ void JoyTranslate::joy_output_cb(const sensor_msgs::msg::Joy &msg)
     }
     mode_msg.data = mode;
     mode_pub_->publish(mode_msg);
+
 }
 
 

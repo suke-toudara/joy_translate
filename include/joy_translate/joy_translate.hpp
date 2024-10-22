@@ -19,6 +19,11 @@ private:
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub_;
     Controller controller;
     int mode;
+    
+    float max_linear_velocity_ = 6;
+    float min_linear_velocity_ = -6;
+    float max_angular_velocity_= 1;
+    float min_angular_velocity_ = -1;
 };
 
 #endif  // JOY_TRANSLATE_HPP_
